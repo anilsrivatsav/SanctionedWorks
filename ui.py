@@ -108,8 +108,8 @@ def display_station_card_view(df):
             st.markdown("---")
 
 def main():
-    st.set_page_config(page_title="Railway Sanctioned Works Dashboard", layout="wide")
-    st.title("🚆 Railway Sanctioned Works Dashboard")
+    st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
+    st.title("🚆 PH-53 Dashboard")
     st.markdown("""---""")
 
     # Sidebar for inputs
