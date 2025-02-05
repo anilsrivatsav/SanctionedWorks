@@ -2,7 +2,7 @@ import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
-
+import json
 class RailwayDashboard:
     def __init__(self, credentials_file, spreadsheet_url):
         self.credentials_file = credentials_file
@@ -118,7 +118,7 @@ def main():
     view_option = st.sidebar.radio("Select View Mode", ("Table View", "Card View"))
 
     # Authentication and Data Fetching
-    credentials_file = 'sanctioned-works-3ec757a1aa69.json'
+    credentials_file = json.loads(st.secrets["credentials"])
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1rJbfhcnEVuGMwGkT8yBObb9Bk5Hx0uU224EGxfplGRc/edit?usp=sharing"
 
     dashboard = RailwayDashboard(credentials_file, spreadsheet_url)
