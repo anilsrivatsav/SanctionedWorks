@@ -74,7 +74,7 @@ def display_sanctioned_works_card_view(df):
                         f"""
                         <div style='background-color: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;'>
                             <h4 style='color: #002868; text-align: center;'>📄 {row.get('Short Name of Work', 'N/A')}</h4>
-                            <hr style='border: 1px solid #ccc;'>
+                            <hr style='border: 1px solid skyblue;'>
                             <p style='color: #333;'><strong>Year of Sanction:</strong> {row.get('Year of Sanction', 'N/A')}</p>
                             <p style='color: #333;'><strong>ALLOCATION:</strong> {row.get('ALLOCATION', 'N/A')}</p>
                             <p style='color: #333;'><strong>Current Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
@@ -95,16 +95,19 @@ def display_station_card_view(df):
                 passenger_footfall = 'N/A'
             st.markdown(
                 f"""
-                <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px skyblue; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
                     <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
+                    
                     <div style='display: flex; gap: 20px;'>
                         <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>📍 Jurisdiction</h4>
+                            <hr style='border: 1px solid skyblue;'>
                             <p style='color: #333;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
                             <p style='color: #333;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} | <strong>DEN:</strong> {row.get('DEN', 'N/A')} | <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                         </div>
                         <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>👥 Passenger Information</h4>
+                            <hr style='border: 1px solid skyblue;'>
                             <p style='color: #333;'><strong>Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
                             <p style='color: #333;'><strong>Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
                             <p style='color: #333;'><strong>Passenger Footfall:</strong> {passenger_footfall}</p>
@@ -112,6 +115,7 @@ def display_station_card_view(df):
                     </div>
                     <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
                         <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
+                        <hr style='border: 1px solid skyblue;'>
                         <p style='color: #333;'><strong>Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
                         <p style='color: #333;'><strong>Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
                         <p style='color: #333;'><strong>Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
