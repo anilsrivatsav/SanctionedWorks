@@ -75,11 +75,13 @@ def display_sanctioned_works_card_view(df):
                         <div style='background-color: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;'>
                             <h4 style='color: #002868; text-align: center;'>📄 {row.get('Short Name of Work', 'N/A')}</h4>
                             <hr style='border: 1px solid skyblue;'>
-                            <p style='color: #333;'><strong>Year of Sanction:</strong> {row.get('Year of Sanction', 'N/A')}</p>
-                            <p style='color: #333;'><strong>ALLOCATION:</strong> {row.get('ALLOCATION', 'N/A')}</p>
-                            <p style='color: #333;'><strong>Current Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
-                            <p style='color: #333;'><strong>PARENT WORK:</strong> {row.get('PARENT WORK', 'N/A')}</p>
-                            <p style='color: #333;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
+                            <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1;'><strong>Year of Sanction:</strong> {row.get('Year of Sanction', 'N/A')}</p>
+                                <p style='flex: 1;'><strong>ALLOCATION:</strong> {row.get('ALLOCATION', 'N/A')}</p>
+                                <p style='flex: 1;'><strong>Current Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
+                                <p style='flex: 1;'><strong>PARENT WORK:</strong> {row.get('PARENT WORK', 'N/A')}</p>
+                                <p style='flex: 1 100%;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
+                            </div>
                         </div>
                         """,
                         unsafe_allow_html=True
