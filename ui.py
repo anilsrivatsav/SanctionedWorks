@@ -2,6 +2,9 @@ import streamlit as st
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
+import plotly.express as px
+import io
+
 class RailwayDashboard:
     def __init__(self, credentials_file, spreadsheet_url):
         self.credentials_file = credentials_file
@@ -9,7 +12,6 @@ class RailwayDashboard:
         self.client = self.authenticate_google_sheets()
         self.sheet = self.client.open_by_url(self.spreadsheet_url)
 
-        # Expected headers for "All Sanctioned Works" table
         self.sanctioned_works_headers = [
             'SN', 'PROJECTID', 'Year of Sanction', 'Date of sanction',
             'Short Name of Work', 'Block Section Station', 'Station Code',
@@ -20,7 +22,6 @@ class RailwayDashboard:
             'Remarks'
         ]
 
-        # Expected headers for "Stations" table
         self.stations_headers = [
             'Station code', 'STATION NAME', 'DIVISION', 'ZONE', 'Section',
             'CMI', 'DEN', 'Sr.DEN', 'Categorisation', 'Earnings range',
@@ -34,6 +35,7 @@ class RailwayDashboard:
         creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, scope)
         return gspread.authorize(creds)
 
+    @st.cache_data(ttl=600)
     def fetch_data(self, worksheet_name, start_row):
         worksheet = self.sheet.worksheet(worksheet_name)
         data = worksheet.get_all_values()
@@ -46,85 +48,63 @@ class RailwayDashboard:
         )]
         return filtered_df
 
-# ------------------------- Main Streamlit App -------------------------
+def download_button(df, filename='data.csv'):
+    buffer = io.StringIO()
+    df.to_csv(buffer, index=False)
+    st.download_button(label="📥 Download CSV", data=buffer.getvalue(), file_name=filename, mime='text/csv')
+
+def display_charts(df):
+    if 'Current Cost' in df.columns and 'Station Code' in df.columns:
+        fig = px.bar(df, x='Station Code', y='Current Cost', color='ALLOCATION')
+        st.plotly_chart(fig)
+
+def sidebar_filters():
+    station_query = st.sidebar.text_input("🔍 Enter Station Code, Name, or Any Field")
+    view_option = st.sidebar.radio("Select View Mode", ("Table View", "Card View"))
+    return station_query, view_option
+
 def display_sanctioned_works_card_view(df):
-    for i in range(0, len(df), 2):  # Display two cards per row
+    for i in range(0, len(df), 2):
         cols = st.columns(2)
         for j in range(2):
             if i + j < len(df):
                 row = df.iloc[i + j]
                 with cols[j]:
-                    st.markdown(
-                        f"""
-                        <div style='background-color: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;'>
-                            <h4 style='color: #002868;'>📄 {row.get('Short Name of Work', 'N/A')}</h4>
-                            <p style='color: #333;'><strong>Year of Sanction:</strong> {row.get('Year of Sanction', 'N/A')}</p>
-                            <p style='color: #333;'><strong>ALLOCATION:</strong> {row.get('ALLOCATION', 'N/A')}</p>
-                            <p style='color: #333;'><strong>Current Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
-                            <p style='color: #333;'><strong>PARENT WORK:</strong> {row.get('PARENT WORK', 'N/A')}</p>
-                            <p style='color: #333;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
-                        </div>
-                        """,
-                        unsafe_allow_html=True
-                    )
-            
+                    with st.expander(f"📄 {row.get('Short Name of Work', 'N/A')}"):
+                        st.write(f"Year of Sanction: {row.get('Year of Sanction', 'N/A')}")
+                        st.write(f"ALLOCATION: {row.get('ALLOCATION', 'N/A')}")
+                        st.write(f"Current Cost: {row.get('Current Cost', 'N/A')}")
+                        st.write(f"PARENT WORK: {row.get('PARENT WORK', 'N/A')}")
+                        st.write(f"Remarks: {row.get('Remarks', 'N/A')}")
 
 def display_station_card_view(df):
     for index, row in df.iterrows():
-        with st.container():
+        with st.expander(f"🚉 {row.get('Station code', 'N/A')} - {row.get('STATION NAME', 'N/A')}"):
             passenger_footfall = row.get('Passenger footfall', '0')
             try:
                 passenger_footfall = int(passenger_footfall) / 30
             except ValueError:
                 passenger_footfall = 'N/A'
-            st.markdown(
-                f"""
-                <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
-                    <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
-                    <div style='display: flex; gap: 20px;'>
-                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
-                            <h4 style='color: #002868;'>📍 Jurisdiction</h4>
-                            <p style='color: #333;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
-                            <p style='color: #333;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} | <strong>DEN:</strong> {row.get('DEN', 'N/A')} | <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
-                        </div>
-                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
-                            <h4 style='color: #002868;'>👥 Passenger Information</h4>
-                            <p style='color: #333;'><strong>Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
-                            <p style='color: #333;'><strong>Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
-                            <p style='color: #333;'><strong>Passenger Footfall:</strong> {passenger_footfall}</p>
-                        </div>
-                    </div>
-                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
-                        <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
-                        <p style='color: #333;'><strong>Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
-                        <p style='color: #333;'><strong>Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
-                        <p style='color: #333;'><strong>Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
-                        <p style='color: #333;'><strong>Parking:</strong> {row.get('Parking', 'N/A')} | <strong>Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            st.markdown("---")
+
+            st.write(f"**Categorisation:** {row.get('Categorisation', 'N/A')}")
+            st.write(f"**Passenger Footfall:** {passenger_footfall}")
+            st.write(f"**Platforms:** {row.get('Platforms', 'N/A')}, **Parking:** {row.get('Parking', 'N/A')}")
 
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
     st.title("🚆 PH-53 Dashboard")
     st.markdown("""---""")
 
-    # Sidebar for inputs
-    st.sidebar.header("Search Filters")
-    station_query = st.sidebar.text_input("🔍 Enter Station Code or Name")
-    view_option = st.sidebar.radio("Select View Mode", ("Table View", "Card View"))
-
-    # Authentication and Data Fetching
     credentials_file = st.secrets["credentials"]
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1rJbfhcnEVuGMwGkT8yBObb9Bk5Hx0uU224EGxfplGRc/edit?usp=sharing"
 
     dashboard = RailwayDashboard(credentials_file, spreadsheet_url)
 
-    sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
-    stations_df = dashboard.fetch_data("Stations", 1)
+    with st.spinner("Fetching Data..."):
+        sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
+        stations_df = dashboard.fetch_data("Stations", 1)
+
+    station_query, view_option = sidebar_filters()
 
     if station_query:
         matching_stations = stations_df[stations_df.apply(
@@ -132,7 +112,6 @@ def main():
         )]
 
         if not matching_stations.empty:
-           
             selected_station = st.sidebar.selectbox("Select a Station", matching_stations['Station code'].unique())
 
             if selected_station:
@@ -140,7 +119,6 @@ def main():
                 selected_station_name = selected_station_info['STATION NAME'].values[0]
 
                 st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
-
                 if view_option == "Table View":
                     st.dataframe(selected_station_info)
                 else:
@@ -155,6 +133,9 @@ def main():
                         st.dataframe(matching_works)
                     else:
                         display_sanctioned_works_card_view(matching_works)
+
+                    display_charts(matching_works)
+                    download_button(matching_works, f"{selected_station}_works.csv")
                 else:
                     st.warning("No related works found for the selected station.")
         else:
