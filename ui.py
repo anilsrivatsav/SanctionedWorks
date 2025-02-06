@@ -104,8 +104,8 @@ def display_station_card_view(df):
                             <h4 style='color: #002868;'>📍 Jurisdiction</h4>
                             <hr style='border: 1px solid skyblue;'>
                             <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
-                                <p style='flex: 1 50%;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
-                                <p style='flex: 1 50%;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} </p>
+                                <p style='flex: 1;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
+                                <p style='flex: 1;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} </p>
                                 <p style='flex: 1 50%;'> <strong>DEN:</strong> {row.get('DEN', 'N/A')} </p>
                                 <p style='flex: 1 50%;'> <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                             </div>
