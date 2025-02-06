@@ -93,6 +93,8 @@ def display_station_card_view(df):
                 passenger_footfall = int(passenger_footfall) / 30
             except ValueError:
                 passenger_footfall = 'N/A'
+
+            # Proper HTML rendering
             st.markdown(
                 f"""
                 <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
@@ -101,13 +103,13 @@ def display_station_card_view(df):
                     <div style='display: flex; gap: 20px;'>
                         <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>📍 Jurisdiction</h4>
-                            <hr style='border: 1px solid;'>
+                            <hr style='border: 1px solid #ccc;'>
                             <p style='color: #333;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
                             <p style='color: #333;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} | <strong>DEN:</strong> {row.get('DEN', 'N/A')} | <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                         </div>
                         <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>👥 Passenger Information</h4>
-                            <hr style='border: 1px solid;'>
+                            <hr style='border: 1px solid #ccc;'>
                             <p style='color: #333;'><strong>Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
                             <p style='color: #333;'><strong>Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
                             <p style='color: #333;'><strong>Passenger Footfall:</strong> {passenger_footfall}</p>
@@ -115,7 +117,7 @@ def display_station_card_view(df):
                     </div>
                     <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
                         <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
-                        <hr style='border: 1px solid;'>
+                        <hr style='border: 1px solid #ccc;'>
                         <p style='color: #333;'><strong>Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
                         <p style='color: #333;'><strong>Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
                         <p style='color: #333;'><strong>Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
@@ -125,8 +127,8 @@ def display_station_card_view(df):
                 """,
                 unsafe_allow_html=True
             )
-            st.markdown("---")
-
+            st.markdown("<hr style='border: 1px solid #ddd;'>", unsafe_allow_html=True)
+            
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
     st.title("🚆 PH-53 Dashboard")
