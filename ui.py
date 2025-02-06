@@ -36,8 +36,8 @@ class RailwayDashboard:
         return gspread.authorize(creds)
 
     @st.cache_data(ttl=600)
-    def fetch_data(self, worksheet_name, start_row):
-        worksheet = self.sheet.worksheet(worksheet_name)
+    def fetch_data(_self, worksheet_name, start_row):  # Changed 'self' to '_self'
+        worksheet = _self.sheet.worksheet(worksheet_name)
         data = worksheet.get_all_values()
         df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
         return df
