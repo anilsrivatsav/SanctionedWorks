@@ -105,7 +105,9 @@ def display_station_card_view(df):
                             <hr style='border: 1px solid skyblue;'>
                             <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
                                 <p style='flex: 1;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
-                                <p style='flex: 1;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} | <strong>DEN:</strong> {row.get('DEN', 'N/A')} | <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+                                <p style='flex: 1;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} </p>
+                                <p style='flex: 1;'> <strong>DEN:</strong> {row.get('DEN', 'N/A')} </p>
+                                <p style='flex: 1;'> <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                             </div>
                         </div>
                         <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
