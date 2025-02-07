@@ -133,7 +133,7 @@ def display_sanctioned_works_card_view(df):
                         unsafe_allow_html=True
                     )
 def display_station_card_view(df):
-    for index, row in df.iterrows():
+    for _, row in df.iterrows():
         with st.container():
             passenger_footfall = row.get('Passenger footfall', '0')
             try:
