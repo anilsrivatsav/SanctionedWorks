@@ -156,33 +156,35 @@ def display_station_card_view(df):
 
 import streamlit as st
 
+import streamlit as st
+
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
 
     # Centered Title
-    st.markdown("<h1 style='text-align: center;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; font-size: 30px;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
     st.markdown("""---""")  # Separator
 
-    # Search Card Below Title
-    with st.container():
-        st.markdown(
-            """
-            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; 
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">
-                <h4 style="color: #333;">🔍 Search Works & Stations</h4>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+    # Search Card (Compact, Center-Aligned)
+    st.markdown(
+        """
+        <div style="background-color: #ffffff; padding: 15px; border-radius: 12px; 
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 350px; margin: auto;">
+            <h4 style="color: #333; text-align: center; margin-bottom: 10px;">🔍 Search</h4>
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
 
-        col1, col2 = st.columns([3, 1])  # Adjust column widths
+    # Small, Center-Aligned Input Box (Max 10 Characters)
+    col1, col2, col3 = st.columns([1, 3, 1])  # Center alignment
+    with col2:
+        station_query = st.text_input("Enter Code (Max 10 Chars)", max_chars=10, key="search", help="Enter Station Code or Name").strip()
 
-        with col1:
-            station_query = st.text_input("Enter Station Code, Name, or Any Field", key="search")
-
-        with col2:
-            # Chips for View Mode (Table View | Card View)
-            view_option = st.selectbox("View Mode", ["Table View", "Card View"], index=0, format_func=lambda x: f"🔘 {x}")
+    # View Mode Chips (Instead of Dropdown)
+    col4, col5, col6 = st.columns([1, 3, 1])  # Center alignment
+    with col5:
+        view_option = st.radio("View Mode", ["📊 Table View", "📌 Card View"], horizontal=True)
 
     st.markdown("""---""")  # Separator below the search card
 
@@ -206,7 +208,7 @@ def main():
             selected_station_name = selected_station_info['STATION NAME'].values[0]
 
             st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
-            if view_option == "Table View":
+            if "Table View" in view_option:
                 st.dataframe(selected_station_info)
             else:
                 display_station_card_view(selected_station_info)
@@ -216,7 +218,7 @@ def main():
             if not matching_works.empty:
                 st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
 
-                if view_option == "Table View":
+                if "Table View" in view_option:
                     st.dataframe(matching_works)
                 else:
                     display_sanctioned_works_card_view(matching_works)
@@ -229,6 +231,6 @@ def main():
             st.warning("No matching stations found.")
     else:
         st.info("Enter a Station Code or Name in the search box to search.")
-            
+
 if __name__ == "__main__":
     main()
