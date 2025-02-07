@@ -241,7 +241,7 @@ def main():
 
 
             #st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
-            if "Table View" in view_option.strip():
+            if "📊 Table" in view_option:
                 st.dataframe(selected_station_info)
             else:
                 display_station_card_view(selected_station_info)
@@ -254,7 +254,7 @@ def main():
             if not matching_works.empty:
                 st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
 
-                if "Table View" in view_option.strip():
+                if "📊 Table" in view_option:
                     st.dataframe(matching_works)
                 else:
                     display_sanctioned_works_card_view(matching_works)
