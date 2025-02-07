@@ -154,33 +154,37 @@ def display_station_card_view(df):
             )
             st.markdown("---")
 
+import streamlit as st
+
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
 
-    # Title and Search Box
-    col1, col2 = st.columns([3, 2])  # Adjust column widths
+    # Centered Title
+    st.markdown("<h1 style='text-align: center;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
+    st.markdown("""---""")  # Separator
 
-    with col1:
-        st.title("🚆 PH-53 Dashboard")
-
-    with col2:
+    # Search Card Below Title
+    with st.container():
         st.markdown(
             """
-            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 10px; 
-                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 10px; 
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center;">
                 <h4 style="color: #333;">🔍 Search Works & Stations</h4>
             </div>
             """,
             unsafe_allow_html=True
         )
-        station_query = st.text_input("Enter Station Code, Name, or Any Field", key="search")
 
-    # View Selector (Horizontal Buttons)
-    col3, col4 = st.columns([2, 2])
-    with col3:
-        view_option = st.radio("View Mode", ["Table View", "Card View"], horizontal=True)
+        col1, col2 = st.columns([3, 1])  # Adjust column widths
 
-    st.markdown("""---""")  # Horizontal separator
+        with col1:
+            station_query = st.text_input("Enter Station Code, Name, or Any Field", key="search")
+
+        with col2:
+            # Chips for View Mode (Table View | Card View)
+            view_option = st.selectbox("View Mode", ["Table View", "Card View"], index=0, format_func=lambda x: f"🔘 {x}")
+
+    st.markdown("""---""")  # Separator below the search card
 
     credentials_file = st.secrets["credentials"]
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1rJbfhcnEVuGMwGkT8yBObb9Bk5Hx0uU224EGxfplGRc/edit?usp=sharing"
@@ -225,6 +229,6 @@ def main():
             st.warning("No matching stations found.")
     else:
         st.info("Enter a Station Code or Name in the search box to search.")
-        
+            
 if __name__ == "__main__":
     main()
