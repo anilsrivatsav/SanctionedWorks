@@ -40,6 +40,11 @@ class RailwayDashboard:
         worksheet = _self.sheet.worksheet(worksheet_name)
         data = worksheet.get_all_values()
         df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
+          # Drop empty column names
+        df = df.loc[:, ~df.columns.duplicated()]
+        # Rename columns if needed (to prevent duplicates)
+        df.columns = pd.io.parsers.ParserBase({'names': df.columns})._maybe_dedup_names(df.columns)
+    
         return df
 
     def filter_sanctioned_works_by_station(self, df, station_code):
@@ -150,6 +155,17 @@ def main():
     with st.spinner("Fetching Data..."):
         sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
         stations_df = dashboard.fetch_data("Stations", 1)
+    # 🛠 Debugging Outputs: Check Column Names & Data Types
+    st.write("🔍 **Sanctioned Works Data Overview:**")
+    st.write("Columns:", sanctioned_works_df.columns.tolist())
+    st.write("Data Types:", sanctioned_works_df.dtypes)
+
+    # Ensure no duplicate column names
+    sanctioned_works_df = sanctioned_works_df.loc[:, ~sanctioned_works_df.columns.duplicated()]
+    sanctioned_works_df.columns = pd.io.parsers.ParserBase({'names': sanctioned_works_df.columns})._maybe_dedup_names(sanctioned_works_df.columns)
+
+    # Convert all data to strings for safe display
+    sanctioned_works_df = sanctioned_works_df.astype(str)
 
     station_query, view_option = sidebar_filters()
 
@@ -176,6 +192,17 @@ def main():
 
                 st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
                 if not matching_works.empty:
+                     # 🛠 Debugging Outputs for matching_works
+                    st.write("🔍 **Matching Works Data Overview:**")
+                    st.write("Columns:", matching_works.columns.tolist())
+                    st.write("Data Types:", matching_works.dtypes)
+                    st.write(matching_works.info())
+
+                    # Ensure all columns have valid data and convert to string
+                    matching_works = matching_works.loc[:, ~matching_works.columns.duplicated()]
+                    matching_works = matching_works.astype(str)
+
+                    st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
                     if view_option == "Table View":
                         st.dataframe(matching_works)
                     else:
