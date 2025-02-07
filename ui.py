@@ -41,7 +41,7 @@ class RailwayDashboard:
         data = worksheet.get_all_values()
         df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
           # Drop empty column names
-        #df = df.loc[:, ~df.columns.duplicated()]
+        df = df.loc[:, ~df.columns.duplicated()]
         # Rename columns if needed (to prevent duplicates)
         #df.columns = pd.io.parsers.ParserBase({'names': df.columns})._maybe_dedup_names(df.columns)
     
@@ -156,9 +156,9 @@ def main():
         sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
         stations_df = dashboard.fetch_data("Stations", 1)
     # 🛠 Debugging Outputs: Check Column Names & Data Types
-    st.write("🔍 **Sanctioned Works Data Overview:**")
-    st.write("Columns:", sanctioned_works_df.columns.tolist())
-    st.write("Data Types:", sanctioned_works_df.dtypes)
+    # st.write("🔍 **Sanctioned Works Data Overview:**")
+    # st.write("Columns:", sanctioned_works_df.columns.tolist())
+    # st.write("Data Types:", sanctioned_works_df.dtypes)
 
     # Ensure no duplicate column names
     sanctioned_works_df = sanctioned_works_df.loc[:, ~sanctioned_works_df.columns.duplicated()]
@@ -193,10 +193,10 @@ def main():
                 st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
                 if not matching_works.empty:
                      # 🛠 Debugging Outputs for matching_works
-                    st.write("🔍 **Matching Works Data Overview:**")
-                    st.write("Columns:", matching_works.columns.tolist())
-                    st.write("Data Types:", matching_works.dtypes)
-                    st.write(matching_works.info())
+                    # st.write("🔍 **Matching Works Data Overview:**")
+                    # st.write("Columns:", matching_works.columns.tolist())
+                    # st.write("Data Types:", matching_works.dtypes)
+                    # st.write(matching_works.info())
 
                     # Ensure all columns have valid data and convert to string
                     matching_works = matching_works.loc[:, ~matching_works.columns.duplicated()]
