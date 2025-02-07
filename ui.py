@@ -169,12 +169,12 @@ def display_station_card_view(df):
                     <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
                         <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
                         <hr style='border: px solid skyblue;'>
-                        <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
-                                <p style='flex: 1 50%;'><strong>🅿️ Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
-                                <p style='flex: 1 50%;'><strong>🔢 Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
-                                <p style='flex: 1 50%;'><strong>🛗 Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
-                                <p style='flex: 1 50%;'><strong>🅿️ Parking:</strong> {row.get('Parking', 'N/A')} </p>
-                                <p style='flex: 1 50%;'><strong>🚻 Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                            <p><strong>🅿️ Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
+                            <p><strong>🔢 Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
+                            <p><strong>🛗 Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
+                            <p><strong>🅿️ Parking:</strong> {row.get('Parking', 'N/A')}</p>
+                            <p><strong>🚻 Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
                         </div>
                     </div>
                 </div>
