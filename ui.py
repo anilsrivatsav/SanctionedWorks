@@ -133,47 +133,57 @@ def display_sanctioned_works_card_view(df):
                         unsafe_allow_html=True
                     )
 def display_station_card_view(df):
-    for _, row in df.iterrows():
-        passenger_footfall = row.get('Passenger footfall', '0')
-        try:
-            passenger_footfall = int(passenger_footfall) / 30  # Convert monthly to daily
-        except ValueError:
-            passenger_footfall = 'N/A'
-
-        st.markdown(
-            f"""
-            <div style="background: #fff; padding: 12px; border-radius: 8px; 
-                        box-shadow: 0 2px 4px rgba(0,0,0,0.15); margin-bottom: 10px;">
-                <h4 style="color: #002868; margin-bottom: 5px;">🚉 {row.get('Station code', 'N/A')} - {row.get('STATION NAME', 'N/A')} ({row.get('Categorisation', 'N/A')})</h4>
-                
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 14px;">
-                    <p><strong>📍 Section:</strong> {row.get('Section', 'N/A')}</p>
-                    <p><strong>👤 CMI:</strong> {row.get('CMI', 'N/A')}</p>
-                    <p><strong>📌 DEN:</strong> {row.get('DEN', 'N/A')}</p>
-                    <p><strong>📌 Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+    for index, row in df.iterrows():
+        with st.container():
+            passenger_footfall = row.get('Passenger footfall', '0')
+            try:
+                passenger_footfall = int(passenger_footfall) / 30
+            except ValueError:
+                passenger_footfall = 'N/A'
+            st.markdown(
+                f"""
+                <div style='background-color: #fff; padding: 15px; border-radius: 10px; 
+                                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 5px;'>
+                    <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
+                    <div style='display: flex; gap: 10px;'>
+                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                            <h4 style='color: #002868;'>📍 Jurisdiction</h4>
+                            <hr style='border: 0.5px solid skyblue;'>
+                            <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1 50%;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} </p>
+                                <p style='flex: 1 50%;'> <strong>DEN:</strong> {row.get('DEN', 'N/A')} </p>
+                                <p style='flex: 1 50%;'> <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+                            </div>
+                        </div>
+                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                            <h4 style='color: #002868;'>👥 Passenger Information</h4>
+                            <hr style='border: 0.5px solid skyblue;'>
+                            <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1 50%;'><strong>Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Passenger Footfall:</strong> {passenger_footfall}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                        <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
+                        <hr style='border: px solid skyblue;'>
+                        <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1 50%;'><strong>Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Parking:</strong> {row.get('Parking', 'N/A')} </p>
+                                <p style='flex: 1 50%;'><strong>Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
+                        </div>
+                    </div>
                 </div>
+                """,
+                unsafe_allow_html=True
+            )
+            st.markdown("---")
 
-                <h5 style="color: #002868; margin-top: 10px;">👥 Passenger Information</h5>
-                <hr style="border: 0.5px solid skyblue;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-                    <p><strong>💰 Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
-                    <p><strong>🚶 Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
-                    <p><strong>👣 Daily Footfall:</strong> {passenger_footfall}</p>
-                </div>
 
-                <h5 style="color: #002868; margin-top: 10px;">🏗️ Infrastructure</h5>
-                <hr style="border: 0.5px solid skyblue;">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
-                    <p><strong>🅿️ Parking:</strong> {row.get('Parking', 'N/A')}</p>
-                    <p><strong>🚻 Pay & Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
-                    <p><strong>🛗 Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
-                    <p><strong>🔢 No. of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
-                    <p><strong>🚉 Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
-                </div>
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
 
