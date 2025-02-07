@@ -4,7 +4,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import plotly.express as px
 import io
-
+from norms import station_amenities_objects
 class RailwayDashboard:
     def __init__(self, credentials_file, spreadsheet_url):
         self.credentials_file = credentials_file
@@ -64,6 +64,36 @@ class RailwayDashboard:
             lambda x: station_code.lower() in [code.strip().lower() for code in str(x).split(',')]
         )]
         return filtered_df
+def get_station_amenities(category):
+    """Fetch the amenities for the given station category."""
+    return station_amenities_objects.get(category, None)
+def display_norms_card(category):
+    norms = get_station_amenities(category)
+    if norms:
+        st.subheader("📜 Norms & Amenities")
+
+        with st.container():
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.markdown("### ✅ Minimum Essential Amenities")
+                for amenity, value in norms.amenities.items():
+                    if value == "Yes":
+                        st.markdown(f"✔️ {amenity}")
+
+            with col2:
+                st.markdown("### 📌 Recommended Amenities")
+                for amenity, value in norms.amenities.items():
+                    if value in ["Yes¹", "Yes²"]:
+                        st.markdown(f"🔹 {amenity}")
+
+            with col3:
+                st.markdown("### 🌟 Desirable Amenities")
+                for amenity, value in norms.amenities.items():
+                    if value not in ["Yes", "Yes¹", "Yes²", "-"]:
+                        st.markdown(f"✨ {amenity}")
+    else:
+        st.warning("No norms data available for this category.")
 
 def download_button(df, filename='data.csv'):
     buffer = io.StringIO()
@@ -152,9 +182,6 @@ def display_station_card_view(df):
             )
             st.markdown("---")
 
-import streamlit as st
-
-import streamlit as st
 
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
@@ -196,12 +223,17 @@ def main():
             selected_station = matching_stations['Station code'].values[0]
             selected_station_info = matching_stations[matching_stations['Station code'] == selected_station]
             selected_station_name = selected_station_info['STATION NAME'].values[0]
+            selected_categorization = selected_station_info['Categorisation'].values[0]
+
 
             st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
             if "Table View" in view_option:
                 st.dataframe(selected_station_info)
             else:
                 display_station_card_view(selected_station_info)
+
+            # Display Norms Card
+            display_norms_card(selected_categorization)
 
             matching_works = dashboard.filter_sanctioned_works_by_station(sanctioned_works_df, selected_station)
 
