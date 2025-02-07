@@ -158,6 +158,8 @@ import streamlit as st
 
 import streamlit as st
 
+import streamlit as st
+
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
 
@@ -165,25 +167,25 @@ def main():
     st.markdown("<h1 style='text-align: center; font-size: 30px;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
     st.markdown("""---""")  # Separator
 
-    # Search Card (Compact, Center-Aligned)
+    # Search Card (Only Text, No Input Inside)
     st.markdown(
         """
-        <div style="background-color: #ffffff; padding: 15px; border-radius: 12px; 
-                    box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 350px; margin: auto;">
-            <h4 style="color: #333; text-align: center; margin-bottom: 10px;">🔍 Search</h4>
+        <div style="background-color: #ffffff; padding: 20px; border-radius: 12px; 
+                    box-shadow: 0 2px 6px rgba(0,0,0,0.1); width: 350px; margin: auto; text-align: center;">
+            <h4 style="color: #333; margin-bottom: 10px;">🔍 Search</h4>
         </div>
         """,
         unsafe_allow_html=True
     )
 
-    # Small, Center-Aligned Input Box (Max 10 Characters)
+    # Small, Centered Input Box (Max 5 Characters) - Placed **Outside** the Search Card
+    st.markdown("<div style='text-align: center; margin-top: 10px;'>", unsafe_allow_html=True)
+    station_query = st.text_input("Enter Station Code or Name", max_chars=5, key="search", help="Enter a 5-character Station Code").strip()
+    st.markdown("</div>", unsafe_allow_html=True)
+
+    # View Mode Chips (Placed Outside the Search Card)
     col1, col2, col3 = st.columns([1, 3, 1])  # Center alignment
     with col2:
-        station_query = st.text_input("Enter Code (Max 10 Chars)", max_chars=10, key="search", help="Enter Station Code or Name").strip()
-
-    # View Mode Chips (Instead of Dropdown)
-    col4, col5, col6 = st.columns([1, 3, 1])  # Center alignment
-    with col5:
         view_option = st.radio("View Mode", ["📊 Table View", "📌 Card View"], horizontal=True)
 
     st.markdown("""---""")  # Separator below the search card
