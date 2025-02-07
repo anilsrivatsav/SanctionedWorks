@@ -64,21 +64,11 @@ class RailwayDashboard:
             lambda x: station_code.lower() in [code.strip().lower() for code in str(x).split(',')]
         )]
         return filtered_df
-def get_station_norms(station_category):
-    if not isinstance(station_category, str):  # Ensure input is a string
-        return "No norms available"
-
-    normalized_category = station_category.replace("-", " ").strip()  # Convert "NSG-1" to "NSG 1"
-
-    if normalized_category in station_amenities_objects:
-        return station_amenities_objects[normalized_category].amenities
-    else:
-        print(f"❌ No norms for category: {station_category} (normalized as {normalized_category})")
-        return "No norms available"
-
-
+def get_station_amenities(category):
+    """Fetch the amenities for the given station category."""
+    return station_amenities_objects.get(category, None)
 def display_norms_card(category):
-    norms = get_station_norms(category)
+    norms = get_station_amenities(category)
     if norms:
         st.subheader("📜 Norms & Amenities")
 
