@@ -81,7 +81,7 @@ def sidebar_filters():
     return station_query, view_option
 
 def display_sanctioned_works_card_view(df):
-    for i in range(0, len(df), 2):
+    for i in range(0, len(df), 2):  # Show 2 cards per row for better compactness
         cols = st.columns(2)
         for j in range(2):
             if i + j < len(df):
@@ -89,21 +89,19 @@ def display_sanctioned_works_card_view(df):
                 with cols[j]:
                     st.markdown(
                         f"""
-                        <div style='background-color: #fff; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px;'>
-                            <h4 style='color: #002868; text-align: center;'>📄 {row.get('Short Name of Work', 'N/A')}</h4>
-                            <hr style='border: 1px solid skyblue;'>
-                            <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
-                                <p style='flex: 1;'><strong>Year of Sanction:</strong> {row.get('Year of Sanction', 'N/A')}</p>
-                                <p style='flex: 1;'><strong>ALLOCATION:</strong> {row.get('ALLOCATION', 'N/A')}</p>
-                                <p style='flex: 1;'><strong>Current Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
-                                <p style='flex: 1 100%;'><strong>PARENT WORK:</strong> {row.get('PARENT WORK', 'N/A')}</p>
-                                <p style='flex: 1 100%;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
-                            </div>
+                        <div style='background-color: #fff; padding: 10px; border-radius: 8px; 
+                                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
+                            <h5 style='color: #002868; text-align: center; font-size: 14px; margin-bottom: 5px;'>📄 {row.get('Short Name of Work', 'N/A')}</h5>
+                            <hr style='border: 0.5px solid #ddd; margin: 5px 0;'>
+                            <p style='margin: 3px 0; font-size: 12px;'><strong>Year:</strong> {row.get('Year of Sanction', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 12px;'><strong>Allocation:</strong> {row.get('ALLOCATION', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 12px;'><strong>Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 12px;'><strong>Parent Work:</strong> {row.get('PARENT WORK', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 12px;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
                         </div>
                         """,
                         unsafe_allow_html=True
                     )
-
 def display_station_card_view(df):
     for index, row in df.iterrows():
         with st.container():
