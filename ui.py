@@ -121,7 +121,7 @@ def display_sanctioned_works_card_view(df):
                         f"""
                         <div style='background-color: #fff; padding: 10px; border-radius: 8px; 
                                     box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
-                            <h5 style='color: #002868; text-align: center; font-size: 14px; margin-bottom: 5px;'>📄 {row.get('Short Name of Work', 'N/A')}</h5>
+                            <h5 style='color: #002868; text-align: left; font-size: 14px; margin-bottom: 5px;'>📄 {row.get('Short Name of Work', 'N/A')}</h5>
                             <hr style='border: 0.5px solid skyblue; margin: 5px 0;'>
                             <p style='margin: 3px 0; font-size: 12px;'><strong>Year:</strong> {row.get('Year of Sanction', 'N/A')}</p>
                             <p style='margin: 3px 0; font-size: 12px;'><strong>Allocation:</strong> {row.get('ALLOCATION', 'N/A')}</p>
@@ -142,10 +142,11 @@ def display_station_card_view(df):
                 passenger_footfall = 'N/A'
             st.markdown(
                 f"""
-                <div style='background-color: #fff; padding: 10px; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.15); '>
+                <div style='background-color: #fff; padding: 15px; border-radius: 10px; 
+                                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 5px;'>
                     <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
                     <div style='display: flex; gap: 10px;'>
-                        <div style='display:grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>📍 Jurisdiction</h4>
                             <hr style='border: 0.5px solid skyblue;'>
                             <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
@@ -155,7 +156,7 @@ def display_station_card_view(df):
                                 <p style='flex: 1 50%;'> <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                             </div>
                         </div>
-                        <div style='display:grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>👥 Passenger Information</h4>
                             <hr style='border: 0.5px solid skyblue;'>
                             <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
@@ -165,7 +166,7 @@ def display_station_card_view(df):
                             </div>
                         </div>
                     </div>
-                    <div style='background-color: #f9f9f9; padding: 10px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
                         <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
                         <hr style='border: px solid skyblue;'>
                         <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
