@@ -35,12 +35,29 @@ class RailwayDashboard:
         creds = ServiceAccountCredentials.from_json_keyfile_dict(credentials, scope)
         return gspread.authorize(creds)
 
-    @st.cache_data(ttl=600)
-    def fetch_data(_self, worksheet_name, start_row):
-        worksheet = _self.sheet.worksheet(worksheet_name)
-        data = worksheet.get_all_values()
-        df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
-        return df
+@st.cache_data(ttl=600)
+def fetch_data(_self, worksheet_name, start_row):
+    worksheet = _self.sheet.worksheet(worksheet_name)
+    data = worksheet.get_all_values()
+
+    # Use the predefined column headers
+    if worksheet_name == "All Sanctioned Works":
+        required_columns = _self.sanctioned_works_headers
+    elif worksheet_name == "Stations":
+        required_columns = _self.stations_headers
+    else:
+        return pd.DataFrame()  # Return empty DataFrame if an unknown sheet is requested
+
+    # Convert data to DataFrame
+    df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
+
+    # Keep only the required columns
+    df = df[[col for col in required_columns if col in df.columns]]
+
+    # Convert all values to string to prevent type errors
+    df = df.astype(str)
+
+    return df
 
     def filter_sanctioned_works_by_station(self, df, station_code):
         filtered_df = df[df['Station Code'].apply(
