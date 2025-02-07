@@ -41,7 +41,7 @@ class RailwayDashboard:
         data = worksheet.get_all_values()
         df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
           # Drop empty column names
-        df = df.loc[:, ~df.columns.duplicated()]
+        #df = df.loc[:, ~df.columns.duplicated()]
         # Rename columns if needed (to prevent duplicates)
         #df.columns = pd.io.parsers.ParserBase({'names': df.columns})._maybe_dedup_names(df.columns)
     
