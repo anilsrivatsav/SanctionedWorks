@@ -165,20 +165,13 @@ def main():
     st.markdown("<h1 style='text-align: center; font-size: 30px;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
     st.markdown("""---""")  # Separator
 
-    # Search Card (Compact, Center-Aligned)
-    st.markdown(
-        """
-        <div>
-            <h4 style="color: #333; text-align: center; margin-bottom: 10px;">🔍 Search</h4>
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
 
     # Small, Center-Aligned Input Box (Max 10 Characters)
-    col1, col2, col3 = st.columns([1, 3, 1])  # Center alignment
+    col1, col2, col3, col4 = st.columns([1, 2, 3, 1])  # Adjust column widths for alignment
     with col2:
-        station_query = st.text_input("Enter Station Code or Name", max_chars=5, key="search", help="Enter Station Code or Name").strip()
+        st.markdown("<h4 style='text-align: right; margin-top: 7px;'>🔍 Search</h4>", unsafe_allow_html=True)
+    with col3:
+         station_query = st.text_input("Enter Station Code or Name", max_chars=5, key="search", help="Enter a 5-character Station Code").strip()
 
     # View Mode Chips (Instead of Dropdown)
     col4, col5, col6 = st.columns([1, 3, 1])  # Center alignment
