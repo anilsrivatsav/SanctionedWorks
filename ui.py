@@ -121,13 +121,13 @@ def display_sanctioned_works_card_view(df):
                         f"""
                         <div style='background-color: #fff; padding: 10px; border-radius: 8px; 
                                     box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
-                            <h5 style='color: #002868; text-align: left; font-size: 14px; margin-bottom: 5px;'>📄 {row.get('Short Name of Work', 'N/A')}</h5>
+                            <h5 style='color: #002868; text-align: left; font-size: 16px; margin-bottom: 5px;'>📄 {row.get('Short Name of Work', 'N/A')}</h5>
                             <hr style='border: 0.5px solid skyblue; margin: 5px 0;'>
-                            <p style='margin: 3px 0; font-size: 12px;'><strong>Year:</strong> {row.get('Year of Sanction', 'N/A')}</p>
-                            <p style='margin: 3px 0; font-size: 12px;'><strong>Allocation:</strong> {row.get('ALLOCATION', 'N/A')}</p>
-                            <p style='margin: 3px 0; font-size: 12px;'><strong>Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
-                            <p style='margin: 3px 0; font-size: 12px;'><strong>Parent Work:</strong> {row.get('PARENT WORK', 'N/A')}</p>
-                            <p style='margin: 3px 0; font-size: 12px;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 13px;'><strong>Year:</strong> {row.get('Year of Sanction', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 13px;'><strong>Allocation:</strong> {row.get('ALLOCATION', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 13px;'><strong>Cost:</strong> {row.get('Current Cost', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 13px;'><strong>Parent Work:</strong> {row.get('PARENT WORK', 'N/A')}</p>
+                            <p style='margin: 3px 0; font-size: 13px;'><strong>Remarks:</strong> {row.get('Remarks', 'N/A')}</p>
                         </div>
                         """,
                         unsafe_allow_html=True
@@ -150,10 +150,10 @@ def display_station_card_view(df):
                             <h4 style='color: #002868;'>📍 Jurisdiction</h4>
                             <hr style='border: 0.5px solid skyblue;'>
                             <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
-                                <p style='flex: 1 50%;'><strong>📍Section:</strong> {row.get('Section', 'N/A')}</p>
-                                <p style='flex: 1 50%;'><strong>👤 Commercial Inspector:</strong> {row.get('CMI', 'N/A')} </p>
-                                <p style='flex: 1 50%;'> <strong>📌 DEN-Section:</strong> {row.get('DEN', 'N/A')} </p>
-                                <p style='flex: 1 50%;'> <strong>📌 Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+                                <p style='flex: 1 50%; font-size: 13px;'><strong>📍Section:</strong> {row.get('Section', 'N/A')}</p>
+                                <p style='flex: 1 50%; font-size: 13px;'><strong>👤 Commercial Inspector:</strong> {row.get('CMI', 'N/A')} </p>
+                                <p style='flex: 1 50%; font-size: 13px;'> <strong>📌 DEN-Section:</strong> {row.get('DEN', 'N/A')} </p>
+                                <p style='flex: 1 50%; font-size: 13px;'> <strong>📌 Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                             </div>
                         </div>
                         <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
