@@ -39,11 +39,18 @@ class RailwayDashboard:
     def fetch_data(_self, worksheet_name, start_row):
         worksheet = _self.sheet.worksheet(worksheet_name)
         data = worksheet.get_all_values()
+    
+        # Convert data to DataFrame
         df = pd.DataFrame(data[start_row:], columns=data[start_row - 1])
-          # Drop empty column names
+    
+        # Drop empty columns
         df = df.loc[:, ~df.columns.duplicated()]
-        # Rename columns if needed (to prevent duplicates)
-        df.columns = pd.io.parsers.ParserBase({'names': df.columns})._maybe_dedup_names(df.columns)
+    
+        # Ensure unique column names
+        df.columns = [f"{col}_{i}" if df.columns.duplicated().sum() > 0 else col for i, col in enumerate(df.columns)]
+    
+        # Convert all values to string to prevent type errors
+        df = df.astype(str)
     
         return df
 
