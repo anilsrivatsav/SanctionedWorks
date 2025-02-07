@@ -142,28 +142,28 @@ def display_station_card_view(df):
 
         st.markdown(
             f"""
-            <div style='background-color: #fff; padding: 12px; border-radius: 8px; 
-                        box-shadow: 0 1px 3px rgba(0,0,0,0.15); margin-bottom: 10px;'>
-                <h4 style='color: #002868; margin-bottom: 5px;'>🚉 {row.get('Station code', 'N/A')} - {row.get('STATION NAME', 'N/A')} ({row.get('Categorisation', 'N/A')})</h4>
+            <div style="background: #fff; padding: 12px; border-radius: 8px; 
+                        box-shadow: 0 2px 4px rgba(0,0,0,0.15); margin-bottom: 10px;">
+                <h4 style="color: #002868; margin-bottom: 5px;">🚉 {row.get('Station code', 'N/A')} - {row.get('STATION NAME', 'N/A')} ({row.get('Categorisation', 'N/A')})</h4>
                 
-                <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 14px;'>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 14px;">
                     <p><strong>📍 Section:</strong> {row.get('Section', 'N/A')}</p>
                     <p><strong>👤 CMI:</strong> {row.get('CMI', 'N/A')}</p>
                     <p><strong>📌 DEN:</strong> {row.get('DEN', 'N/A')}</p>
                     <p><strong>📌 Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
                 </div>
 
-                <h5 style='color: #002868; margin-top: 10px;'>👥 Passenger Information</h5>
-                <hr style='border: 0.5px solid skyblue;'>
-                <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 8px;'>
+                <h5 style="color: #002868; margin-top: 10px;">👥 Passenger Information</h5>
+                <hr style="border: 0.5px solid skyblue;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                     <p><strong>💰 Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
                     <p><strong>🚶 Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
                     <p><strong>👣 Daily Footfall:</strong> {passenger_footfall}</p>
                 </div>
 
-                <h5 style='color: #002868; margin-top: 10px;'>🏗️ Infrastructure</h5>
-                <hr style='border: 0.5px solid skyblue;'>
-                <div style='display: grid; grid-template-columns: 1fr 1fr; gap: 8px;'>
+                <h5 style="color: #002868; margin-top: 10px;">🏗️ Infrastructure</h5>
+                <hr style="border: 0.5px solid skyblue;">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
                     <p><strong>🅿️ Parking:</strong> {row.get('Parking', 'N/A')}</p>
                     <p><strong>🚻 Pay & Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
                     <p><strong>🛗 Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
@@ -174,7 +174,6 @@ def display_station_card_view(df):
             """,
             unsafe_allow_html=True
         )
-
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
 
