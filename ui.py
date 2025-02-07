@@ -64,11 +64,21 @@ class RailwayDashboard:
             lambda x: station_code.lower() in [code.strip().lower() for code in str(x).split(',')]
         )]
         return filtered_df
-def get_station_amenities(category):
-    """Fetch the amenities for the given station category."""
-    return station_amenities_objects.get(category, None)
+def get_station_norms(station_category):
+    if not isinstance(station_category, str):  # Ensure input is a string
+        return "No norms available"
+
+    normalized_category = station_category.replace("-", " ").strip()  # Convert "NSG-1" to "NSG 1"
+
+    if normalized_category in station_amenities_objects:
+        return station_amenities_objects[normalized_category].amenities
+    else:
+        print(f"❌ No norms for category: {station_category} (normalized as {normalized_category})")
+        return "No norms available"
+
+
 def display_norms_card(category):
-    norms = get_station_amenities(category)
+    norms = get_station_norms(category)
     if norms:
         st.subheader("📜 Norms & Amenities")
 
@@ -133,48 +143,47 @@ def display_sanctioned_works_card_view(df):
                         unsafe_allow_html=True
                     )
 def display_station_card_view(df):
-    for _, row in df.iterrows():
+    for index, row in df.iterrows():
         with st.container():
             passenger_footfall = row.get('Passenger footfall', '0')
             try:
                 passenger_footfall = int(passenger_footfall) / 30
             except ValueError:
                 passenger_footfall = 'N/A'
-            
             st.markdown(
                 f"""
-                <div style='background-color: #f9f9f9; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
-                    <h3 style='color: #333; margin-bottom: 5px;'>🚉 {row.get('Station code', 'N/A')} - {row.get('STATION NAME', 'N/A')} ({row.get('Categorisation', 'N/A')})</h3>
-                    
-                    <div style='display: flex; flex-wrap: wrap; gap: 8px;'>
-                        
-                        <div style='flex: 1; background-color: #ffffff; padding: 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);'>
-                            <h4 style='color: #002868; margin-bottom: 5px;'>📍 Jurisdiction</h4>
-                            <hr style='border: 0.5px solid skyblue; margin: 5px 0;'>
-                            <p><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
-                            <p><strong>CMI:</strong> {row.get('CMI', 'N/A')}</p>
-                            <p><strong>DEN:</strong> {row.get('DEN', 'N/A')}</p>
-                            <p><strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+                <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                    <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
+                    <div style='display: flex; gap: 20px;'>
+                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                            <h4 style='color: #002868;'>📍 Jurisdiction</h4>
+                            <hr style='border: 0.5px solid skyblue;'>
+                            <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1 50%;'><strong>Section:</strong> {row.get('Section', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>CMI:</strong> {row.get('CMI', 'N/A')} </p>
+                                <p style='flex: 1 50%;'> <strong>DEN:</strong> {row.get('DEN', 'N/A')} </p>
+                                <p style='flex: 1 50%;'> <strong>Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+                            </div>
                         </div>
-
-                        <div style='flex: 1; background-color: #ffffff; padding: 8px; border-radius: 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1);'>
-                            <h4 style='color: #002868; margin-bottom: 5px;'>👥 Passenger Information</h4>
-                            <hr style='border: 0.5px solid skyblue; margin: 5px 0;'>
-                            <p><strong>Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
-                            <p><strong>Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
-                            <p><strong>Passenger Footfall:</strong> {passenger_footfall}</p>
+                        <div style='flex: 1; background-color: #ffffff; padding: 10px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                            <h4 style='color: #002868;'>👥 Passenger Information</h4>
+                            <hr style='border: 0.5px solid skyblue;'>
+                            <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1 50%;'><strong>Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Passenger Footfall:</strong> {passenger_footfall}</p>
+                            </div>
                         </div>
                     </div>
-
-                    <div style='background-color: #f9f9f9; padding: 10px; border-radius: 6px; margin-top: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
-                        <h4 style='color: #002868; margin-bottom: 5px;'>🏗️ Infrastructure</h4>
-                        <hr style='border: 0.5px solid skyblue; margin: 5px 0;'>
-                        <div style='display: flex; flex-wrap: wrap; gap: 8px;'>
-                            <p style='flex: 1 50%;'><strong>Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
-                            <p style='flex: 1 50%;'><strong>Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
-                            <p style='flex: 1 50%;'><strong>Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
-                            <p style='flex: 1 50%;'><strong>Parking:</strong> {row.get('Parking', 'N/A')}</p>
-                            <p style='flex: 1 50%;'><strong>Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
+                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                        <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
+                        <hr style='border: 0.5px solid skyblue;'>
+                        <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
+                                <p style='flex: 1 50%;'><strong>Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
+                                <p style='flex: 1 50%;'><strong>Parking:</strong> {row.get('Parking', 'N/A')} </p>
+                                <p style='flex: 1 50%;'><strong>Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
                         </div>
                     </div>
                 </div>
@@ -182,6 +191,7 @@ def display_station_card_view(df):
                 unsafe_allow_html=True
             )
             st.markdown("---")
+
 
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
