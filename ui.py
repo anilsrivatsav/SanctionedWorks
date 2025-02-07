@@ -156,8 +156,31 @@ def display_station_card_view(df):
 
 def main():
     st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
-    st.title("🚆 PH-53 Dashboard")
-    st.markdown("""---""")
+
+    # Title and Search Box
+    col1, col2 = st.columns([3, 2])  # Adjust column widths
+
+    with col1:
+        st.title("🚆 PH-53 Dashboard")
+
+    with col2:
+        st.markdown(
+            """
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 10px; 
+                        box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+                <h4 style="color: #333;">🔍 Search Works & Stations</h4>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+        station_query = st.text_input("Enter Station Code, Name, or Any Field", key="search")
+
+    # View Selector (Horizontal Buttons)
+    col3, col4 = st.columns([2, 2])
+    with col3:
+        view_option = st.radio("View Mode", ["Table View", "Card View"], horizontal=True)
+
+    st.markdown("""---""")  # Horizontal separator
 
     credentials_file = st.secrets["credentials"]
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1rJbfhcnEVuGMwGkT8yBObb9Bk5Hx0uU224EGxfplGRc/edit?usp=sharing"
@@ -168,44 +191,40 @@ def main():
         sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
         stations_df = dashboard.fetch_data("Stations", 1)
 
-    station_query, view_option = sidebar_filters()
-
     if station_query:
         matching_stations = stations_df[stations_df.apply(
             lambda row: station_query.lower() in str(row['Station code']).lower() or station_query.lower() in str(row['STATION NAME']).lower(), axis=1
         )]
 
         if not matching_stations.empty:
-            selected_station = st.sidebar.selectbox("Select a Station", matching_stations['Station code'].unique())
+            selected_station = matching_stations['Station code'].values[0]
+            selected_station_info = matching_stations[matching_stations['Station code'] == selected_station]
+            selected_station_name = selected_station_info['STATION NAME'].values[0]
 
-            if selected_station:
-                selected_station_info = matching_stations[matching_stations['Station code'] == selected_station]
-                selected_station_name = selected_station_info['STATION NAME'].values[0]
+            st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
+            if view_option == "Table View":
+                st.dataframe(selected_station_info)
+            else:
+                display_station_card_view(selected_station_info)
 
-                st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
-                if view_option == "Table View":
-                    st.dataframe(selected_station_info)
-                else:
-                    display_station_card_view(selected_station_info)
+            matching_works = dashboard.filter_sanctioned_works_by_station(sanctioned_works_df, selected_station)
 
-                matching_works = dashboard.filter_sanctioned_works_by_station(sanctioned_works_df, selected_station)
-                matching_works['Station Name'] = selected_station_name
-
+            if not matching_works.empty:
                 st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
-                if not matching_works.empty:
-                    if view_option == "Table View":
-                        st.dataframe(matching_works)
-                    else:
-                        display_sanctioned_works_card_view(matching_works)
 
-                    display_charts(matching_works)
-                    download_button(matching_works, f"{selected_station}_works.csv")
+                if view_option == "Table View":
+                    st.dataframe(matching_works)
                 else:
-                    st.warning("No related works found for the selected station.")
+                    display_sanctioned_works_card_view(matching_works)
+
+                display_charts(matching_works)
+                download_button(matching_works, f"{selected_station}_works.csv")
+            else:
+                st.warning("No related works found for the selected station.")
         else:
             st.warning("No matching stations found.")
     else:
-        st.info("Enter a Station Code or Name in the sidebar to search.")
-
+        st.info("Enter a Station Code or Name in the search box to search.")
+        
 if __name__ == "__main__":
     main()
