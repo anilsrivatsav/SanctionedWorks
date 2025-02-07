@@ -185,26 +185,39 @@ def display_station_card_view(df):
 
 
 def main():
-    st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
-
-    # Centered Title
-    st.markdown("<h1 style='text-align: center; font-size: 30px;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
-    st.markdown("""---""")  # Separator
-
-
-    # Small, Center-Aligned Input Box (Max 10 Characters)
-    col1, col2, col3, col4 = st.columns([1, 2, 3, 1])  # Adjust column widths for alignment
+    # Compact Header Row with Title, Search, and View Mode
+    col1, col2, col3 = st.columns([3, 2, 2])  # Adjusted column proportions
+    
+    with col1:
+        st.markdown("<h1 style='text-align: left; font-size: 26px; margin-bottom: 0;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
+    
     with col2:
-        st.markdown("<h4 style='text-align: right; margin-top: 7px;'>🔍 Search</h4>", unsafe_allow_html=True)
+        station_query = st.text_input("🔍 Search", max_chars=5, key="search", help="Enter Station Code or Name").strip()
+    
     with col3:
-         station_query = st.text_input("Enter Station Code or Name", max_chars=5, key="search", help="Enter a 5-character Station Code").strip()
+        view_option = st.radio("View Mode", ["📊 Table", "📌 Card"], horizontal=True)
+    
+    st.markdown("---")  # Separator below the search card
+    # st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
 
-    # View Mode Chips (Instead of Dropdown)
-    col4, col5, col6 = st.columns([1, 3, 1])  # Center alignment
-    with col5:
-        view_option = st.radio("View Mode", ["📊 Table View", "📌 Card View"], horizontal=True)
+    # # Centered Title
+    # st.markdown("<h1 style='text-align: center; font-size: 30px;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
+    # st.markdown("""---""")  # Separator
 
-    st.markdown("""---""")  # Separator below the search card
+
+    # # Small, Center-Aligned Input Box (Max 10 Characters)
+    # col1, col2, col3, col4 = st.columns([1, 2, 3, 1])  # Adjust column widths for alignment
+    # with col2:
+    #     st.markdown("<h4 style='text-align: right; margin-top: 7px;'>🔍 Search</h4>", unsafe_allow_html=True)
+    # with col3:
+    #      station_query = st.text_input("Enter Station Code or Name", max_chars=5, key="search", help="Enter a 5-character Station Code").strip()
+
+    # # View Mode Chips (Instead of Dropdown)
+    # col4, col5, col6 = st.columns([1, 3, 1])  # Center alignment
+    # with col5:
+    #     view_option = st.radio("View Mode", ["📊 Table View", "📌 Card View"], horizontal=True)
+
+    # st.markdown("""---""")  # Separator below the search card
 
     credentials_file = st.secrets["credentials"]
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1rJbfhcnEVuGMwGkT8yBObb9Bk5Hx0uU224EGxfplGRc/edit?usp=sharing"
@@ -227,7 +240,7 @@ def main():
             selected_categorization = selected_station_info['Categorisation'].values[0]
 
 
-            st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
+            #st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
             if "Table View" in view_option:
                 st.dataframe(selected_station_info)
             else:
