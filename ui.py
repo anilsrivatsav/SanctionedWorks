@@ -133,69 +133,75 @@ def display_sanctioned_works_card_view(df):
                         unsafe_allow_html=True
                     )
 def display_station_card_view(df):
-    for index, row in df.iterrows():
-        with st.container():
-            passenger_footfall = row.get('Passenger footfall', '0')
-            try:
-                passenger_footfall = int(passenger_footfall) / 30
-            except ValueError:
-                passenger_footfall = 'N/A'
-            st.markdown(
-                f"""
-                <style>
-                    .responsive-grid {{
-                        display: grid;
-                        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-                        gap: 10px;
-                    }}
-                </style>
-                """,
-                unsafe_allow_html=True
-            )
-            st.markdown(
-                f"""
-                <div  style='background-color: #fff; padding: 10px; border-radius: 8px; 
-                                    box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
-                    <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
-                    <div style=' gap: 10px;'>
-                        <div style=' background-color: #ffffff; padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
-                            <h4 style='color: #002868;'>📍 Jurisdiction</h4>
-                            <hr style='border: 0.5px solid skyblue;'>
-                            <div>
-                                <p><strong>📍Section:</strong> {row.get('Section', 'N/A')}</p>
-                                <p><strong>👤 Commercial Inspector:</strong> {row.get('CMI', 'N/A')} </p>
-                                <p> <strong>📌 DEN-Section:</strong> {row.get('DEN', 'N/A')} </p>
-                                <p> <strong>📌 Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+    #for index, row in df.iterrows():
+    for i in range(0, len(df), 2):  # Show 2 cards per row for better compactness
+        cols = st.columns(2)
+        for j in range(2):
+            if i + j < len(df):
+                row = df.iloc[i + j]
+                with cols[j]:
+                 with st.container():
+                    passenger_footfall = row.get('Passenger footfall', '0')
+                    try:
+                        passenger_footfall = int(passenger_footfall) / 30
+                    except ValueError:
+                        passenger_footfall = 'N/A'
+                    st.markdown(
+                        f"""
+                        <style>
+                            .responsive-grid {{
+                                display: grid;
+                                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                                gap: 10px;
+                            }}
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    st.markdown(
+                        f"""
+                        <div  style='background-color: #fff; padding: 10px; border-radius: 8px; 
+                                            box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
+                            <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
+                            <div style=' gap: 10px;'>
+                                <div style=' background-color: #ffffff; padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                                    <h4 style='color: #002868;'>📍 Jurisdiction</h4>
+                                    <hr style='border: 0.5px solid skyblue;'>
+                                    <div>
+                                        <p><strong>📍Section:</strong> {row.get('Section', 'N/A')}</p>
+                                        <p><strong>👤 Commercial Inspector:</strong> {row.get('CMI', 'N/A')} </p>
+                                        <p> <strong>📌 DEN-Section:</strong> {row.get('DEN', 'N/A')} </p>
+                                        <p> <strong>📌 Sr.DEN:</strong> {row.get('Sr.DEN', 'N/A')}</p>
+                                    </div>
+                                </div>
+                                <div style=' background-color: #ffffff; padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
+                                    <h4 style='color: #002868;'>👥 Passenger Information</h4>
+                                    <hr style='border: 0.5px solid skyblue;'>
+                                    <div >
+                                        <p><strong>💰 Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
+                                        <p><strong>🚶 Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
+                                        <p><strong>👣 Passenger Footfall:</strong> {passenger_footfall}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px;margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
+                                <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
+                                <hr style='border: px solid skyblue;'>
+                                <div>
+                                    <p><strong>🅿️ Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
+                                    <p><strong>🔢 Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
+                                    <p><strong>🛗 Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
+                                    <p><strong>🅿️ Parking:</strong> {row.get('Parking', 'N/A')}</p>
+                                    <p><strong>🚻 Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
+                                </div>
                             </div>
                         </div>
-                        <div style=' background-color: #ffffff; padding: 15px; border-radius: 8px; margin-bottom: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
-                            <h4 style='color: #002868;'>👥 Passenger Information</h4>
-                            <hr style='border: 0.5px solid skyblue;'>
-                            <div >
-                                <p><strong>💰 Earnings Range:</strong> {row.get('Earnings range', 'N/A')}</p>
-                                <p><strong>🚶 Passenger Range:</strong> {row.get('Passenger range', 'N/A')}</p>
-                                <p><strong>👣 Passenger Footfall:</strong> {passenger_footfall}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px;margin-bottom: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
-                        <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
-                        <hr style='border: px solid skyblue;'>
-                        <div>
-                            <p><strong>🅿️ Platforms:</strong> {row.get('Platforms', 'N/A')}</p>
-                            <p><strong>🔢 Number of Platforms:</strong> {row.get('Number of Platforms', 'N/A')}</p>
-                            <p><strong>🛗 Platform Type:</strong> {row.get('Platform Type', 'N/A')}</p>
-                            <p><strong>🅿️ Parking:</strong> {row.get('Parking', 'N/A')}</p>
-                            <p><strong>🚻 Pay-and-Use:</strong> {row.get('Pay-and-Use', 'N/A')}</p>
-                        </div>
-                    </div>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
-            st.markdown("---")
-
-
+                        """,
+                        unsafe_allow_html=True
+                    )
+                    st.markdown("---")
+        
+        
 def main():
     # Compact Header Row with Title, Search, and View Mode
     col1, col2, col3 = st.columns([3, 2, 2])  # Adjusted column proportions
