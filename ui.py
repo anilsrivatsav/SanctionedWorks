@@ -119,7 +119,7 @@ def display_sanctioned_works_card_view(df):
                 with cols[j]:
                     st.markdown(
                         f"""
-                        <div class='responsive-grid' style='background-color: #fff; padding: 10px; border-radius: 8px; 
+                        <div style='background-color: #fff; padding: 10px; border-radius: 8px; 
                                     box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
                             <h5 style='color: #002868; text-align: left; font-size: 16px; margin-bottom: 5px;'>📄 {row.get('Short Name of Work', 'N/A')}</h5>
                             <hr style='border: 0.5px solid skyblue; margin: 5px 0;'>
