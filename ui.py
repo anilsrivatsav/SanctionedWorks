@@ -157,7 +157,7 @@ def display_station_card_view(df):
                 <div  style='background-color: #fff; padding: 10px; border-radius: 8px; 
                                     box-shadow: 0 2px 4px rgba(0,0,0,0.1); margin-bottom: 10px;'>
                     <h3 style='color: #333;'>🚉 {row.get('Station code', 'N/A')} - ({row.get('STATION NAME', 'N/A')}) - {row.get('Categorisation', 'N/A')}</h3>
-                   
+                    <div style=' gap: 10px;'>
                         <div style=' background-color: #ffffff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);'>
                             <h4 style='color: #002868;'>📍 Jurisdiction</h4>
                             <hr style='border: 0.5px solid skyblue;'>
@@ -177,7 +177,7 @@ def display_station_card_view(df):
                                 <p><strong>👣 Passenger Footfall:</strong> {passenger_footfall}</p>
                             </div>
                         </div>
-                   
+                    </div>
                     <div style='background-color: #f9f9f9; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);'>
                         <h4 style='color: #002868;'>🏗️ Infrastructure</h4>
                         <hr style='border: px solid skyblue;'>
