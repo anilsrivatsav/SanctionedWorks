@@ -1,4 +1,12 @@
-station_amenities_objects= {
+class StationAmenities:
+    def __init__(self, category, amenities):
+        self.category = category
+        self.amenities = amenities
+
+    def __repr__(self):
+        return f"StationAmenities(category={self.category}, amenities={self.amenities})"
+
+station_amenities_objects = {
     "NSG1": {
         "Minimum Essential Amenities": {
             "Drinking water": "20 taps/PF",
@@ -265,7 +273,16 @@ station_amenities_objects= {
             "Signage": "Yes",
             "Bottle crushers, vending machines": "Yes"
         }
-    },
+    }
+}
+
+for i in range(2, 7):
+    station_amenities_objects[f"NSG {i}"] = StationAmenities(
+        f"NSG {i}", station_amenities_objects["NSG 1"].amenities.copy()
+    )
+
+halt_amenities_data = {
+   
     "HG1": {
         "Minimum Essential Amenities": {
             "Drinking water": "Appropriate drinking water facility",
@@ -397,3 +414,10 @@ station_amenities_objects= {
         }
     }
 }
+
+for i in range(1, 4):
+    station_amenities_objects[f"HG {i}"] = StationAmenities(
+        f"HG {i}", {amenity: values[i - 1] for amenity, values in halt_amenities_data.items()}
+    )
+
+print(station_amenities_objects)
