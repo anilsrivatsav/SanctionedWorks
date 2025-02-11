@@ -273,9 +273,9 @@ def main():
             selected_station = matching_stations['Station code'].values[0]
             selected_station_info = matching_stations[matching_stations['Station code'] == selected_station]
             selected_station_name = selected_station_info['STATION NAME'].values[0]
-            logger.debug(f"Selected station category: {selected_categorization}")
+            
             selected_categorization = selected_station_info['Categorisation'].values[0]
-
+            logger.debug(f"Selected station category: {selected_categorization}")
 
             #st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
             if "📊 Table" in view_option:
