@@ -70,28 +70,25 @@ def get_station_amenities(category):
 def display_norms_card(category):
     norms = get_station_amenities(category)
     if norms:
-        st.subheader("📜 Norms & Amenities")
+        st.subheader(f"📜 Norms for {category}")
 
         with st.container():
             col1, col2, col3 = st.columns(3)
 
             with col1:
-                st.markdown("### ✅ Minimum Essential Amenities")
-                for amenity, value in norms.amenities.items():
-                    if value == "Yes":
-                        st.markdown(f"✔️ {amenity}")
-
+              st.markdown("### ✅ Minimum Essential Amenities")
+              for amenity, value in norms["Minimum Essential Amenities"].items():
+                  st.markdown(f"✔️ {amenity}: {value}")
+          
             with col2:
                 st.markdown("### 📌 Recommended Amenities")
-                for amenity, value in norms.amenities.items():
-                    if value in ["Yes¹", "Yes²"]:
-                        st.markdown(f"🔹 {amenity}")
-
+                for amenity, value in norms["Recommended"].items():
+                    st.markdown(f"🔹 {amenity}: {value}")
+            
             with col3:
                 st.markdown("### 🌟 Desirable Amenities")
-                for amenity, value in norms.amenities.items():
-                    if value not in ["Yes", "Yes¹", "Yes²", "-"]:
-                        st.markdown(f"✨ {amenity}")
+                for amenity, value in norms["Desirable"].items():
+                     st.markdown(f"✨ {amenity}: {value}")
     else:
         st.warning("No norms data available for this category.")
 
@@ -100,6 +97,16 @@ def download_button(df, filename='data.csv'):
     df.to_csv(buffer, index=False)
     st.download_button(label="📥 Download CSV", data=buffer.getvalue(), file_name=filename, mime='text/csv')
 
+def display_norms_table(category):
+    norms = get_station_amenities(category)
+    if norms:
+        st.subheader(f"📋 Norms & Amenities for {category}")
+        for section, amenities in norms.items():
+            st.markdown(f"### {section}")
+            df = pd.DataFrame(amenities.items(), columns=["Amenity", "Value"])
+            st.dataframe(df)
+    else:
+        st.warning("No norms data available for this category.")
 def display_charts(df):
     if 'Current Cost' in df.columns and 'Station Code' in df.columns:
         fig = px.bar(df, x='Station Code', y='Current Cost', color='ALLOCATION')
@@ -261,11 +268,12 @@ def main():
             #st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
             if "📊 Table" in view_option:
                 st.dataframe(selected_station_info)
+                display_norms_table(selected_categorization)
             else:
                 display_station_card_view(selected_station_info)
 
             # Display Norms Card
-            display_norms_card(selected_categorization)
+                display_norms_card(selected_categorization)
 
             matching_works = dashboard.filter_sanctioned_works_by_station(sanctioned_works_df, selected_station)
 
