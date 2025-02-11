@@ -4,7 +4,12 @@ from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import plotly.express as px
 import io
+import logging
 from norms import station_amenities_objects
+
+#Configure logging
+logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+logger = logging.getLogger(__name__)
 class RailwayDashboard:
     def __init__(self, credentials_file, spreadsheet_url):
         self.credentials_file = credentials_file
@@ -56,7 +61,7 @@ class RailwayDashboard:
     
         # Convert all values to string to prevent type errors
         df = df.astype(str)
-    
+        logger.debug(f"Fetched {len(df)} rows from {worksheet_name}")
         return df
 
     def filter_sanctioned_works_by_station(self, df, station_code):
@@ -65,8 +70,13 @@ class RailwayDashboard:
         )]
         return filtered_df
 def get_station_amenities(category):
-    """Fetch the amenities for the given station category."""
-    return station_amenities_objects.get(category, None)
+    logger.debug(f"Fetching amenities for category: {category}")
+    amenities = station_amenities_objects.get(category, None)
+    if amenities:
+        logger.debug(f"Amenities found for {category}: {amenities.keys()}")
+    else:
+        logger.warning(f"No amenities found for category: {category}")
+    return amenities
 def display_norms_card(category):
     norms = get_station_amenities(category)
     if norms:
@@ -254,6 +264,7 @@ def main():
         stations_df = dashboard.fetch_data("Stations", 1)
 
     if station_query:
+        logger.debug(f"User searched for station: {station_query}")
         matching_stations = stations_df[stations_df.apply(
             lambda row: station_query.lower() in str(row['Station code']).lower() or station_query.lower() in str(row['STATION NAME']).lower(), axis=1
         )]
@@ -262,6 +273,7 @@ def main():
             selected_station = matching_stations['Station code'].values[0]
             selected_station_info = matching_stations[matching_stations['Station code'] == selected_station]
             selected_station_name = selected_station_info['STATION NAME'].values[0]
+            logger.debug(f"Selected station category: {selected_categorization}")
             selected_categorization = selected_station_info['Categorisation'].values[0]
 
 
