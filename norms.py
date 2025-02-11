@@ -1,5 +1,5 @@
 station_amenities_objects= {
-    "NSG1": {
+    "NSG-1": {
         "Minimum Essential Amenities": {
             "Drinking water": "20 taps/PF",
             "Waiting hall": "250 sqm",
@@ -45,7 +45,7 @@ station_amenities_objects= {
             "Access control": "Yes"
         }
     },
-    "NSG2": {
+    "NSG-2": {
         "Minimum Essential Amenities": {
             "Drinking water": "20 taps/PF",
             "Waiting hall": "250 sqm",
@@ -90,7 +90,7 @@ station_amenities_objects= {
             "Washable apron with direct watering facilities": "Yes"
         }
     },
-    "NSG3": {
+    "NSG-3": {
         "Minimum Essential Amenities": {
             "Drinking water": "20 taps/PF",
             "Waiting hall": "125 sqm",
@@ -134,7 +134,7 @@ station_amenities_objects= {
             "Modular Catering Stalls": "Yes"
         }
     },
-    "NSG4": {
+    "NSG-4": {
         "Minimum Essential Amenities": {
             "Drinking water": "20 taps/PF",
             "Waiting hall": "75 sqm",
@@ -177,7 +177,7 @@ station_amenities_objects= {
             "Coin-operated Ticket Vending Machines": "Yes"
         }
     },
-    "NSG5": {
+    "NSG-5": {
         "Minimum Essential Amenities": {
             "Drinking water": "8 taps/PF",
             "Waiting hall": "30 sqm",
@@ -222,7 +222,7 @@ station_amenities_objects= {
             "Access Control": "Yes"
         }
     },
-    "NSG6": {
+    "NSG-6": {
         "Minimum Essential Amenities": {
             "Drinking water": "2 taps/PF",
             "Waiting hall": "15 sqm",
@@ -266,7 +266,7 @@ station_amenities_objects= {
             "Bottle crushers, vending machines": "Yes"
         }
     },
-    "HG1": {
+    "HG-1": {
         "Minimum Essential Amenities": {
             "Drinking water": "Appropriate drinking water facility",
             "Waiting hall": "10 sqm booking office cum waiting hall",
@@ -313,7 +313,7 @@ station_amenities_objects= {
             "Bus type shelter": "Yes"
         }
     },
-    "HG2": {
+    "HG-2": {
         "Minimum Essential Amenities": {
             "Drinking water": "Appropriate drinking water facility",
             "Waiting hall": "10 sqm booking office cum waiting hall",
@@ -354,7 +354,7 @@ station_amenities_objects= {
             "Coin-operated Ticket Vending Machines": "Yes"
         }
     },
-    "HG3": {
+    "HG-3": {
         "Minimum Essential Amenities": {
             "Drinking water": "Yes",
             "Waiting hall": "-",
