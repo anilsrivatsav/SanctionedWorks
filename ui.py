@@ -282,7 +282,7 @@ def main():
         sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
         stations_df = dashboard.fetch_data("Stations", 1)
 
-
+    
     # If the user selects the Categorisation Report view, display it for all stations
     if view_option == "📋 Categorisation Report":
         display_station_categorisation_report(stations_df)
