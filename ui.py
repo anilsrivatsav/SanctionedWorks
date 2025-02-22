@@ -240,59 +240,29 @@ def display_station_categorisation_report(df):
         
 def main():
     # Compact Header Row with Title, Search, and View Mode
-    col1, col2, col3 = st.columns([3, 2, 2])  # Adjusted column proportions
-    
+    col1, col2, col3 = st.columns([3, 2, 2])
     with col1:
         st.markdown("<h1 style='text-align: left; font-size: 26px; margin-bottom: 0;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
-    
     with col2:
         station_query = st.text_input("🔍 Search", max_chars=5, key="search", help="Enter Station Code or Name").strip()
-    
     with col3:
-        view_option = st.radio("View Mode", ["📊 Table", "📌 Card"], horizontal=True)
+        # Updated view mode options to include Categorisation Report
+        view_option = st.radio("View Mode", ["📊 Table", "📌 Card", "📋 Categorisation Report"], horizontal=True)
     
-    st.markdown("---")  # Separator below the search card
-    # st.set_page_config(page_title="PH-53 Dashboard", layout="wide")
-
-    # # Centered Title
-    # st.markdown("<h1 style='text-align: center; font-size: 30px;'>🚆 PH-53 Dashboard</h1>", unsafe_allow_html=True)
-    # st.markdown("""---""")  # Separator
-
-
-    # # Small, Center-Aligned Input Box (Max 10 Characters)
-    # col1, col2, col3, col4 = st.columns([1, 2, 3, 1])  # Adjust column widths for alignment
-    # with col2:
-    #     st.markdown("<h4 style='text-align: right; margin-top: 7px;'>🔍 Search</h4>", unsafe_allow_html=True)
-    # with col3:
-    #      station_query = st.text_input("Enter Station Code or Name", max_chars=5, key="search", help="Enter a 5-character Station Code").strip()
-
-    # # View Mode Chips (Instead of Dropdown)
-    # col4, col5, col6 = st.columns([1, 3, 1])  # Center alignment
-    # with col5:
-    #     view_option = st.radio("View Mode", ["📊 Table View", "📌 Card View"], horizontal=True)
-
-    # st.markdown("""---""")  # Separator below the search card
-
+    st.markdown("---")
+    
     credentials_file = st.secrets["credentials"]
     spreadsheet_url = "https://docs.google.com/spreadsheets/d/1rJbfhcnEVuGMwGkT8yBObb9Bk5Hx0uU224EGxfplGRc/edit?usp=sharing"
-
     dashboard = RailwayDashboard(credentials_file, spreadsheet_url)
 
     with st.spinner("Fetching Data..."):
         sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
         stations_df = dashboard.fetch_data("Stations", 1)
 
-    
-    # If the user selects the Categorisation Report view, display it for all stations
+    # If Categorisation Report view is selected, show the full report
     if view_option == "📋 Categorisation Report":
         display_station_categorisation_report(stations_df)
     elif station_query:
-        logger.debug(f"User searched for station: {station_query}")
-        matching_stations = stations_df[stations_df.apply(
-            lambda row: station_query.lower() in str(row['Station code']).lower() or station_query.lower() in str(row['STATION NAME']).lower(), axis=1
-        )]
-
-    if station_query:
         logger.debug(f"User searched for station: {station_query}")
         matching_stations = stations_df[stations_df.apply(
             lambda row: station_query.lower() in str(row['Station code']).lower() or station_query.lower() in str(row['STATION NAME']).lower(), axis=1
@@ -302,30 +272,23 @@ def main():
             selected_station = matching_stations['Station code'].values[0]
             selected_station_info = matching_stations[matching_stations['Station code'] == selected_station]
             selected_station_name = selected_station_info['STATION NAME'].values[0]
-            
             selected_categorization = selected_station_info['Categorisation'].values[0]
             logger.debug(f"Selected station category: {selected_categorization}")
 
-            #st.subheader(f"📊 Station Details for {selected_station_name} ({selected_station})")
-            if "📊 Table" in view_option:
+            if view_option == "📊 Table":
                 st.dataframe(selected_station_info)
                 display_norms_table(selected_categorization)
             else:
                 display_station_card_view(selected_station_info)
-
-            # Display Norms Card
                 display_norms_card(selected_categorization)
 
             matching_works = dashboard.filter_sanctioned_works_by_station(sanctioned_works_df, selected_station)
-
             if not matching_works.empty:
                 st.subheader(f"📋 Sanctioned Works for {selected_station_name} ({selected_station})")
-
-                if "📊 Table" in view_option:
+                if view_option == "📊 Table":
                     st.dataframe(matching_works)
                 else:
                     display_sanctioned_works_card_view(matching_works)
-
                 display_charts(matching_works)
                 download_button(matching_works, f"{selected_station}_works.csv")
             else:
