@@ -6,7 +6,7 @@ import plotly.express as px
 import io
 import logging
 from norms import station_amenities_objects
-
+import pdfkit
 #Configure logging
 logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 logger = logging.getLogger(__name__)
@@ -217,26 +217,60 @@ def display_station_card_view(df):
                         unsafe_allow_html=True
                     )
                     st.markdown("---")
+
+def convert_df_to_excel(df):
+    output = io.BytesIO()
+    with pd.ExcelWriter(output, engine='xlsxwriter') as writer:
+        df.to_excel(writer, index=False, sheet_name='Report')
+    return output.getvalue()
+
+def convert_df_to_pdf(df):
+    # Convert DataFrame to HTML and then to PDF using pdfkit
+    html = df.to_html(index=False)
+    pdf = pdfkit.from_string(html, False)
+    return pdf
 def display_station_categorisation_report(df):
     st.markdown("## Station Categorisation Report")
     # Group the stations DataFrame by "Categorisation"
     grouped = df.groupby("Categorisation")
     for category, group in grouped:
-        # For the header, use the first row's Earnings and Passenger ranges (adjust if needed)
+        # For the header, use the first row's Earnings and Passenger ranges
         earnings_range = group['Earnings range'].iloc[0]
         passenger_range = group['Passenger range'].iloc[0]
         st.markdown(f"### {category} | Earnings Range: {earnings_range} | Passenger Range: {passenger_range}")
-        # List each station's code, name, and computed average daily footfall (Passenger footfall / 30)
+        
+        # Build a DataFrame with only Station Code and computed Avg Daily Footfall
+        rows = []
         for _, row in group.iterrows():
             station_code = row['Station code']
-            station_name = row['STATION NAME']
             try:
                 footfall = int(row['Passenger footfall']) / 30
                 footfall = f"{footfall:.2f}"
             except Exception:
                 footfall = 'N/A'
-            st.markdown(f"- **{station_code}** - {station_name} (Avg Daily Footfall: {footfall})")
-       
+            rows.append({"Station Code": station_code, "Avg Daily Footfall": footfall})
+        
+        report_df = pd.DataFrame(rows)
+        st.table(report_df)
+        
+        # Add download buttons for Excel and PDF
+        excel_data = convert_df_to_excel(report_df)
+        st.download_button(
+            label="Download Excel",
+            data=excel_data,
+            file_name=f"{category}_report.xlsx",
+            mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        )
+        try:
+            pdf_data = convert_df_to_pdf(report_df)
+            st.download_button(
+                label="Download PDF",
+                data=pdf_data,
+                file_name=f"{category}_report.pdf",
+                mime="application/pdf"
+            )
+        except Exception as e:
+            st.error("PDF generation is not configured. Please install pdfkit and wkhtmltopdf.")
         
 def main():
     # Compact Header Row with Title, Search, and View Mode
