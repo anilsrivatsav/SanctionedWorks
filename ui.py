@@ -217,7 +217,26 @@ def display_station_card_view(df):
                         unsafe_allow_html=True
                     )
                     st.markdown("---")
-        
+def display_station_categorisation_report(df):
+    st.markdown("## Station Categorisation Report")
+    # Group the stations DataFrame by "Categorisation"
+    grouped = df.groupby("Categorisation")
+    for category, group in grouped:
+        # For the header, use the first row's Earnings and Passenger ranges (adjust if needed)
+        earnings_range = group['Earnings range'].iloc[0]
+        passenger_range = group['Passenger range'].iloc[0]
+        st.markdown(f"### {category} | Earnings Range: {earnings_range} | Passenger Range: {passenger_range}")
+        # List each station's code, name, and computed average daily footfall (Passenger footfall / 30)
+        for _, row in group.iterrows():
+            station_code = row['Station code']
+            station_name = row['STATION NAME']
+            try:
+                footfall = int(row['Passenger footfall']) / 30
+                footfall = f"{footfall:.2f}"
+            except Exception:
+                footfall = 'N/A'
+            st.markdown(f"- **{station_code}** - {station_name} (Avg Daily Footfall: {footfall})")
+       
         
 def main():
     # Compact Header Row with Title, Search, and View Mode
@@ -262,6 +281,16 @@ def main():
     with st.spinner("Fetching Data..."):
         sanctioned_works_df = dashboard.fetch_data("All Sanctioned Works", 7)
         stations_df = dashboard.fetch_data("Stations", 1)
+
+
+    # If the user selects the Categorisation Report view, display it for all stations
+    if view_option == "📋 Categorisation Report":
+        display_station_categorisation_report(stations_df)
+    elif station_query:
+        logger.debug(f"User searched for station: {station_query}")
+        matching_stations = stations_df[stations_df.apply(
+            lambda row: station_query.lower() in str(row['Station code']).lower() or station_query.lower() in str(row['STATION NAME']).lower(), axis=1
+        )]
 
     if station_query:
         logger.debug(f"User searched for station: {station_query}")

@@ -19,15 +19,20 @@ station_amenities_objects= {
             "Water cooler": "2 on each PF"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+            "Clock": "To be decided by the Zonal Railways",
+            "Bathrooms": "1/400 Ndb",
+            "Water Coolers": "To be provided if the total number of passengers, inward and outward, exceeds 1000 per day",
+            "IVRS": "48 lines (calls 72000)",
+            "Public Address System": "To be decided by the Zonal Railways",
+            "Parking-circulatory Area": "To be decided by the Zonal Railways",
+            "Electronic Train Indicator Board": "To be decided by the Zonal Railways",
+            "Public Phone Booth": "To be decided by the Zonal Railways",
+            "Signage": "To be decided by the Zonal Railways",
+            "Coach Guidance System": "Available",
+            "Insect Catchers": "Available",
+            "Infant Nursing Cubicle": "Available",
+            "Universal Mobile Charging Points": "To be decided by the Zonal Railways",
+            "Emergency Lighting": "10 light points per platform, backup from DG set/Solar"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -65,15 +70,20 @@ station_amenities_objects= {
             "Water cooler": "2 on each PF"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+ "Clock": "To be decided by the Zonal Railways",
+        "Bathrooms": "1/400 Ndb",
+        "Water Coolers": "To be provided if total passengers exceed 1000 per day",
+        "IVRS": "48 lines (calls 72000)",
+        "Public Address System": "To be decided by the Zonal Railways",
+        "Parking-circulatory Area": "To be decided by the Zonal Railways",
+        "Electronic Train Indicator Board": "To be decided by the Zonal Railways",
+        "Public Phone Booth": "To be decided by the Zonal Railways",
+        "Signage": "To be decided by the Zonal Railways",
+        "Coach Guidance System": "Available",
+        "Insect Catchers": "Available",
+        "Infant Nursing Cubicle": "Available",
+        "Universal Mobile Charging Points": "To be decided by the Zonal Railways",
+        "Emergency Lighting": "Backup source from DG set/Solar"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -110,15 +120,20 @@ station_amenities_objects= {
             "Water cooler": "2 on each PF"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+        "Clock": "To be decided by the Zonal Railways",
+        "Bathrooms": "1/400 Ndb",
+        "Water Coolers": "To be provided if total passengers exceed 1000 per day",
+        "IVRS": "24 lines (calls 5000-20000)",
+        "Public Address System": "To be decided by the Zonal Railways",
+        "Parking-circulatory Area": "To be decided by the Zonal Railways",
+        "Electronic Train Indicator Board": "To be decided by the Zonal Railways",
+        "Public Phone Booth": "To be decided by the Zonal Railways",
+        "Signage": "To be decided by the Zonal Railways",
+        "Coach Guidance System": "Available",
+        "Insect Catchers": "Available",
+        "Infant Nursing Cubicle": "Available",
+        "Universal Mobile Charging Points": "To be decided by the Zonal Railways",
+        "Emergency Lighting": "Backup source from DG set/Solar"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -154,15 +169,20 @@ station_amenities_objects= {
             "Water cooler": "2 on each main PF"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+        "Clock": "To be decided by the Zonal Railways",
+        "Bathrooms": "1/400 Ndb",
+        "Water Coolers": "To be provided if total passengers exceed 1000 per day",
+        "IVRS": "24 lines (calls 5000-20000)",
+        "Public Address System": "To be decided by the Zonal Railways",
+        "Parking-circulatory Area": "To be decided by the Zonal Railways",
+        "Electronic Train Indicator Board": "To be decided by the Zonal Railways",
+        "Public Phone Booth": "To be decided by the Zonal Railways",
+        "Signage": "To be decided by the Zonal Railways",
+        "Coach Guidance System": "Available",
+        "Insect Catchers": "Not mandatory",
+        "Infant Nursing Cubicle": "Not mandatory",
+        "Universal Mobile Charging Points": "To be decided by the Zonal Railways",
+        "Emergency Lighting": "Backup source from DG set/Solar"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -196,15 +216,20 @@ station_amenities_objects= {
             "Foot over bridge": "As per norms"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+        "Clock": "To be decided by the Zonal Railways",
+        "Bathrooms": "1/400 Ndb",
+        "Water Coolers": "To be provided if total passengers exceed 1000 per day",
+        "IVRS": "Minimum 6 lines if IVRS is otherwise justified",
+        "Public Address System": "To be decided by the Zonal Railways",
+        "Parking-circulatory Area": "To be decided by the Zonal Railways",
+        "Electronic Train Indicator Board": "To be decided by the Zonal Railways",
+        "Public Phone Booth": "To be decided by the Zonal Railways",
+        "Signage": "To be decided by the Zonal Railways",
+        "Coach Guidance System": "Not mandatory",
+        "Insect Catchers": "Not mandatory",
+        "Infant Nursing Cubicle": "Not mandatory",
+        "Universal Mobile Charging Points": "To be decided by the Zonal Railways",
+        "Emergency Lighting": "Backup source from DG set/Solar"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -241,15 +266,20 @@ station_amenities_objects= {
             "Foot over bridge": "1"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+        "Clock": "To be decided by the Zonal Railways",
+        "Bathrooms": "1/400 Ndb",
+        "Water Coolers": "To be provided if total passengers exceed 1000 per day",
+        "IVRS": "Minimum 6 lines if IVRS is otherwise justified",
+        "Public Address System": "To be decided by the Zonal Railways",
+        "Parking-circulatory Area": "To be decided by the Zonal Railways",
+        "Electronic Train Indicator Board": "To be decided by the Zonal Railways",
+        "Public Phone Booth": "To be decided by the Zonal Railways",
+        "Signage": "To be decided by the Zonal Railways",
+        "Coach Guidance System": "Not mandatory",
+        "Insect Catchers": "Not mandatory",
+        "Infant Nursing Cubicle": "Not mandatory",
+        "Universal Mobile Charging Points": "To be decided by the Zonal Railways",
+        "Emergency Lighting": "Not mandatory"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -284,16 +314,20 @@ station_amenities_objects= {
             "FOB": "1"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes",
-            "Modular Catering Stalls": "Yes"
+      "Drinking Water": "Number of taps = Nmax/25",
+      "Waiting Hall/Shed": "1.394 Nds sqm (Excluding C)",
+      "Seating Arrangement": "0.4 Nds (No. of seats)",
+      "Platform Shelter": "0.28 Nmax, SG/1-3 category stations",
+      "Urinals": "Nds/200",
+      "Latrines": "Nds/200",
+      "Lighting": "As per Board’s letter no. 95/Elec(G)/138/5 dated 19.3.96",
+      "Fans": "As per Board’s letter no. 95/Elec(G)/138/5 dated 19.3.96",
+      "Time Table Display": "To be decided by the Zonal Railways",
+      "Clock": "To be decided by the Zonal Railways",
+      "Bathrooms": "1/400 Ndb at other junction & terminal stations only",
+      "Insect Catchers": "Available",
+      "Infant Nursing Cubicle": "Available",
+      "Coach Guidance System": "Available"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -331,15 +365,20 @@ station_amenities_objects= {
             "FOB": "1"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+      "Drinking Water": "Number of taps = Nmax/25",
+      "Waiting Hall/Shed": "1.394 Nds sqm (Excluding C)",
+      "Seating Arrangement": "0.4 Nds (No. of seats)",
+      "Platform Shelter": "0.28 Nmax, SG/1-3 category stations",
+      "Urinals": "Nds/200",
+      "Latrines": "Nds/200",
+      "Lighting": "As per Board’s letter no. 95/Elec(G)/138/5 dated 19.3.96",
+      "Fans": "As per Board’s letter no. 95/Elec(G)/138/5 dated 19.3.96",
+      "Time Table Display": "To be decided by the Zonal Railways",
+      "Clock": "To be decided by the Zonal Railways",
+      "Bathrooms": "1/400 Ndb at other junction & terminal stations only",
+      "Insect Catchers": "Available",
+      "Infant Nursing Cubicle": "Not mandatory",
+      "Coach Guidance System": "Available"
         },
         "Desirable": {
             "Food Courts": "Yes",
@@ -372,15 +411,20 @@ station_amenities_objects= {
             "FOB": "1"
         },
         "Recommended": {
-            "Wi-Fi": "Yes",
-            "CCTV Surveillance": "Yes",
-            "Parking area with lights": "Yes",
-            "Solar Power": "As per feasibility",
-            "Escalators": "Yes",
-            "Coach Guidance System": "Yes",
-            "Travellator": "Yes",
-            "Integrated Mobile Charging Stations": "Yes",
-            "High mast lighting": "Yes"
+      "Drinking Water": "Number of taps = Nmax/25",
+      "Waiting Hall/Shed": "1.394 Nds sqm (Excluding C)",
+      "Seating Arrangement": "0.4 Nds (No. of seats)",
+      "Platform Shelter": "0.28 Nmax, SG/1-3 category stations",
+      "Urinals": "Nds/200",
+      "Latrines": "Nds/200",
+      "Lighting": "As per Board’s letter no. 95/Elec(G)/138/5 dated 19.3.96",
+      "Fans": "As per Board’s letter no. 95/Elec(G)/138/5 dated 19.3.96",
+      "Time Table Display": "To be decided by the Zonal Railways",
+      "Clock": "To be decided by the Zonal Railways",
+      "Bathrooms": "1/400 Ndb at other junction & terminal stations only",
+      "Insect Catchers": "Not mandatory",
+      "Infant Nursing Cubicle": "Not mandatory",
+      "Coach Guidance System": "Not mandatory"
         },
         "Desirable": {
             "Food Courts": "Yes",
